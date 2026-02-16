@@ -212,7 +212,15 @@ export async function handleSlackEventsHttp(
     return { status: 200, body: "ignored" };
   }
 
-  await routeSlackMessageToCore(core, msg);
+  void routeSlackMessageToCore(core, msg).catch((error: unknown) => {
+    console.error("Failed to route Slack message", {
+      error,
+      teamId: msg.teamId,
+      channelId: msg.channelId,
+      eventTs: msg.eventTs,
+    });
+  });
+
   return { status: 200, body: "ok" };
 }
 

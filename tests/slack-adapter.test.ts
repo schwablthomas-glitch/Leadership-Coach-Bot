@@ -153,4 +153,52 @@ describe("http handler", () => {
     expect(result.status).toBe(200);
     expect((core.handleMessage as ReturnType<typeof vi.fn>).mock.calls.length).toBe(1);
   });
+
+  it("acknowledges Slack event before core handler resolves", async () => {
+    const body = JSON.stringify({
+      type: "event_callback",
+      team_id: "T1",
+      event: {
+        type: "message",
+        channel_type: "im",
+        user: "U1",
+        channel: "D1",
+        text: "coach me",
+      },
+    });
+
+    const timestamp = "1710000000";
+    const secret = "test-secret";
+
+    let resolveCore: ((value: string) => void) | undefined;
+    const corePromise = new Promise<string>((resolve) => {
+      resolveCore = resolve;
+    });
+
+    const core: CoachCore = {
+      handleMessage: vi.fn(() => corePromise),
+    };
+
+    const responsePromise = handleSlackEventsHttp(
+      {
+        headers: {
+          "x-slack-signature": sign(secret, timestamp, body),
+          "x-slack-request-timestamp": timestamp,
+        },
+        rawBody: body,
+      },
+      {
+        SLACK_BOT_TOKEN: "xoxb-test",
+        SLACK_SIGNING_SECRET: secret,
+      },
+      core,
+    );
+
+    await expect(responsePromise).resolves.toMatchObject({ status: 200, body: "ok" });
+    expect((core.handleMessage as ReturnType<typeof vi.fn>).mock.calls.length).toBe(1);
+
+    resolveCore?.("done");
+    await corePromise;
+  });
+
 });
