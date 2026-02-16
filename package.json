@@ -1,0 +1,13 @@
+{
+  "name": "leadership-coach-bot",
+  "version": "1.0.0",
+  "description": "Leadership Coach Bot (Node.js 20 + TypeScript)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "npm run build && node dist/server.js",
+    "start": "node dist/server.js",
+    "test": "npm run build && node --test dist/tests/**/*.test.js",
+    "retention": "npm run build && node dist/scripts/retention.js"
+  }
+}
