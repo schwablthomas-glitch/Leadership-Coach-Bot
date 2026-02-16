@@ -1,26 +1,13 @@
 {
   "name": "leadership-coach-bot",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Leadership Coach Bot (Node.js 20 + TypeScript)",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "dev:teams": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
+    "dev": "npm run build && node dist/server.js",
     "start": "node dist/server.js",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@slack/bolt": "^4.2.0",
-    "botbuilder": "^4.23.3",
-    "dotenv": "^16.4.5",
-    "fastify": "^4.28.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.13.5",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.6"
+    "test": "npm run build && node --test dist/tests/**/*.test.js",
+    "retention": "npm run build && node dist/scripts/retention.js"
   }
 }
