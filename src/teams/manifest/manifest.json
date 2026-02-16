@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.0",
+  "id": "00000000-0000-0000-0000-000000000000",
+  "packageName": "com.example.leadershipcoachbot",
+  "developer": {
+    "name": "Leadership Coach Bot",
+    "websiteUrl": "https://example.com",
+    "privacyUrl": "https://example.com/privacy",
+    "termsOfUseUrl": "https://example.com/terms"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "LeadershipCoach",
+    "full": "Leadership Coach Bot"
+  },
+  "description": {
+    "short": "1:1 Coaching Bot für Microsoft Teams",
+    "full": "Bot Framework basierter 1:1 Coaching Bot mit Safety/Normalize/Coach Pipeline."
+  },
+  "bots": [
+    {
+      "botId": "00000000-0000-0000-0000-000000000000",
+      "scopes": ["personal"],
+      "supportsFiles": false,
+      "isNotificationOnly": false
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": ["<your-ngrok-subdomain>.ngrok-free.app"]
+}
